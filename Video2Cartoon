@@ -8,8 +8,11 @@ Created on Wed Aug  5 21:12:33 2020
 import numpy as np
 import cv2
 
-
-cap = cv2.VideoCapture('MyTestVideo.mp4')
+# Edit the following line to work with the video of your choice
+cap = cv2.VideoCapture('MyTestVideo.mp4') 
+# You may uncomment the next line to use a camera for realtime cartoon effect
+# You may probably have to change the entry (0) to (1) if you have more than one camera connected to your PC
+# cap = cv2.VideoCapture(0) 
 
 while(cap.isOpened()):
     # Capture frame-by-frame
