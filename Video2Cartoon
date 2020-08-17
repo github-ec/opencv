@@ -1,0 +1,40 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Aug  5 21:12:33 2020
+
+@author: EC
+"""
+
+import numpy as np
+import cv2
+
+
+cap = cv2.VideoCapture('MyTestVideo.mp4')
+
+while(cap.isOpened()):
+    # Capture frame-by-frame
+    ret, frame = cap.read()
+    
+    if ret == True:
+    # Operations on the frame come here
+        # Create graylevel image from color frame
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        # Use Canny filter to retrieve the edges from graylevel image
+        gray_filtered = cv2.Canny(gray,60,120)
+        # Create a mask image from the Canny edge using binary threshold
+        ret, mask = cv2.threshold(gray_filtered, 1, 255, cv2.THRESH_BINARY)
+        # Convert the graylevel mask to RGB color
+        color_filtered = cv2.cvtColor(mask, cv2.COLOR_GRAY2BGR)
+        # Subtract the color mask image from the original frame
+        image = cv2.subtract(frame,color_filtered,mask)
+
+        # Display the resulting frame        
+        cv2.imshow('frame',image)
+        
+        
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+
+# When everything done, release  cap and destroy all Window(s)
+cap.release()
+cv2.destroyAllWindows()
